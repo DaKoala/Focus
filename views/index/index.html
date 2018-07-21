@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>聚点</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+    <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
+    <script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div id="app">
+    <template v-if="pageInit">
+        <div class="map-container">
+            <div class="map-mask"></div>
+            <el-amap vid="amap" :zoom="zoom" :center="center">
+                <template v-for="(user, index) in users">
+                    <el-amap-ground-image :url="maskUrl" :bounds="makePos(user.center, 0)"></el-amap-ground-image>
+                    <el-amap-ground-image :url="user.avatar" :bounds="makePos(user.center, 1)"></el-amap-ground-image>
+                    <el-amap-circle :center="adjustCenter(user.center)" :radius="120" :fill-opacity="0"
+                                    :stroke-opacity="0"
+                                    :events="userevent(user)"></el-amap-circle>
+                </template>
+            </el-amap>
+        </div>
+
+        <div class="gps-button">
+            <img class="gps-icon" src="../../src/images/gps.svg">
+        </div>
+        <div class="download-button">下载聚点</div>
+
+        <div class="modal" v-if="modalAppear" v-on:click="handleHideModal">
+            <div class="modal-box" v-on:click.stop="preventBroadcast">
+                <div class="modal-heart" @click="handleLike">
+                    <i class="mdui-icon material-icons modal-heart-icon-red modal-heart-icon" v-if="users[currentUser].like">favorite</i>
+                    <i class="mdui-icon material-icons modal-heart-icon" v-else>favorite_border</i>
+                </div>
+                <p class="modal-title">{{users[currentUser].title}}</p>
+                <p class="modal-username">{{users[currentUser].name}} - <span class="modal-date">{{users[currentUser].time}}</span></p>
+                <p class="modal-para">
+                    {{users[currentUser].text}}
+                </p>
+                <div class="image-container">
+                    <img class="modal-image" v-for="img in users[currentUser].images" v-bind:src="img"/>
+                </div>
+                <div class="modal-button-wrapper">
+                    <button class="mdui-btn mdui-color-red-100 mdui-ripple modal-button" @click="handleHideModal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template v-else>
+        <div class="mdui-spinner"></div>
+    </template>
+</div>
+<script src="../../src/libs/vue.js"></script>
+<script src="../../src/libs/amap.js"></script>
+<script src="../../src/libs/axios.js"></script>
+<script src="../../utils.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
