@@ -54,7 +54,7 @@ const app = new Vue({
             this.modalAppear = false;
         },
         handleDownload() {
-            window.open('https://dakoala.github.io/Focus/oia');
+            window.location.href = 'https://dakoala.github.io/Focus/oia';
         },
         preventBroadcast() {
             return;
