@@ -69,8 +69,8 @@ const app = new Vue({
             navigator.geolocation.getCurrentPosition(position => {
                     let latitude = position.coords.latitude;
                     let longitude = position.coords.longitude;
-                    this.center.push(longitude);
                     this.center.push(latitude);
+                    this.center.push(longitude);
                     this.locationInit = true;
                     axios.post(URLs.ADDRESS_NEARBY, {
                         "lat": this.center[0],
