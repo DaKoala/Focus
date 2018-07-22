@@ -2,7 +2,7 @@
  * Created by billyzou on 2018/7/21.
  */
 window.VueAMap.initAMapApiLoader({
-    key: '7f14be5b15c85579aaeeaa03f1ffcec9',
+    key: '5dc98232e063ec74e82af758707768e5',
     plugin: ['Autocomplete', 'PlaceSearch', 'Scale', 'OverView', 'ToolBar', 'MapType', 'PolyEditor', 'AMap.CircleEditor'],
     v: '1.4.4'
 });
@@ -67,14 +67,15 @@ const app = new Vue({
     created: function() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
-                    let latitude = position.coords.latitude;
+                    console.log(position);
                     let longitude = position.coords.longitude;
-                    this.center.push(latitude);
+                    let latitude = position.coords.latitude;
                     this.center.push(longitude);
+                    this.center.push(latitude);
                     this.locationInit = true;
                     axios.post(URLs.ADDRESS_NEARBY, {
-                        "lat": this.center[0],
-                        "lon": this.center[1],
+                        "lat": this.center[1],
+                        "lon": this.center[0],
                         "radius": 10000
                     })
                         .then(response => {
