@@ -11,8 +11,9 @@ const app = new Vue({
     el: '#app',
     data: {
         zoom: 15,
-        center: [121.5273285, 31.21515044],
+        center: [],
         maskUrl: 'https://s1.ax1x.com/2018/07/21/PGilHf.png',
+        locationInit: false,
         pageInit: false,
         modalAppear: false,
         currentUser: null,
@@ -56,14 +57,29 @@ const app = new Vue({
         handleDownload() {
             window.location.href = 'https://dakoala.github.io/Focus/oia';
         },
+        handleLocateCenter() {
+
+        },
         preventBroadcast() {
             return;
         }
     },
     created: function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const longitude = position.coords.longitude;
+                    const latitude = position.coords.latitude;
+                    app.center.push(longitude);
+                    app.center.push(latitude);
+                    app.locationInit = true;
+                },
+                function (e) {}
+            )
+        }
         axios.post(URLs.ADDRESS_NEARBY, {
-            "lat": 31.21515044,
-            "lon": 121.5273285,
+            "lat": this.center[0],
+            "lon": this.center[1],
             "radius": 10000
         })
             .then(response => {

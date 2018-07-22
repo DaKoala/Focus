@@ -11,7 +11,7 @@
 </head>
 <body class=".mdui-theme-primary-red">
 <div id="app">
-    <template v-if="pageInit">
+    <template v-if="pageInit && locationInit">
         <div class="map-container">
             <div class="map-mask"></div>
             <el-amap vid="amap" :zoom="zoom" :center="center">
@@ -25,7 +25,7 @@
             </el-amap>
         </div>
 
-        <div class="gps-button">
+        <div class="gps-button" @click="handleLocateCenter">
             <img class="gps-icon" src="../../src/images/gps.svg">
         </div>
         <div class="download-button" @click="handleDownload">下载聚点</div>
@@ -52,7 +52,7 @@
             </div>
         </div>
     </template>
-    <div class="mdui-spinner mdui-spinner-colorful" v-if="!pageInit"></div>
+    <div class="mdui-spinner mdui-spinner-colorful" v-else></div>
 </div>
 <script src="../../src/libs/vue.js"></script>
 <script src="../../src/libs/amap.js"></script>
