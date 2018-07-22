@@ -65,22 +65,21 @@ const app = new Vue({
         }
     },
     created: function() {
-        let vm = this;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                function (position) {
+                (position) => {
                     const longitude = position.coords.longitude;
                     const latitude = position.coords.latitude;
-                    vm.center.push(longitude);
-                    vm.center.push(latitude);
-                    vm.locationInit = true;
+                    this.center.push(longitude);
+                    this.center.push(latitude);
+                    this.locationInit = true;
                     axios.post(URLs.ADDRESS_NEARBY, {
-                        "lat": vm.center[0],
-                        "lon": vm.center[1],
+                        "lat": this.center[0],
+                        "lon": this.center[1],
                         "radius": 10000
                     })
                         .then(response => {
-                            vm.pageInit = true;
+                            this.pageInit = true;
                             const data = response.data;
                             for (let i = 0; i < data.length; i++) {
                                 let tmp = {
@@ -94,14 +93,16 @@ const app = new Vue({
                                     center: [data[i].location.lon, data[i].location.lat],
                                     avatar: `${API_DOMAIN}/account/avatar/${data[i].publisher.userName}`
                                 };
-                                vm.users.push(tmp);
+                                this.users.push(tmp);
                             }
                         })
                         .catch(error => {
                             console.log(error)
                         })
                 },
-                function (e) {}
+                function (e) {
+                    console.log(e);
+                }
             )
         }
     }
