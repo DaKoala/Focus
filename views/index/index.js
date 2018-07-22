@@ -65,43 +65,44 @@ const app = new Vue({
         }
     },
     created: function() {
+        let vm = this;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 function (position) {
                     const longitude = position.coords.longitude;
                     const latitude = position.coords.latitude;
-                    app.center.push(longitude);
-                    app.center.push(latitude);
-                    app.locationInit = true;
+                    vm.center.push(longitude);
+                    vm.center.push(latitude);
+                    vm.locationInit = true;
+                    axios.post(URLs.ADDRESS_NEARBY, {
+                        "lat": vm.center[0],
+                        "lon": vm.center[1],
+                        "radius": 10000
+                    })
+                        .then(response => {
+                            vm.pageInit = true;
+                            const data = response.data;
+                            for (let i = 0; i < data.length; i++) {
+                                let tmp = {
+                                    index: i,
+                                    like: false,
+                                    title: data[i].title,
+                                    text: data[i].text,
+                                    images: data[i].media && data[i].media.images,
+                                    name: data[i].publisher.userName,
+                                    time: timeFormat(data[i].timeStamp),
+                                    center: [data[i].location.lon, data[i].location.lat],
+                                    avatar: `${API_DOMAIN}/account/avatar/${data[i].publisher.userName}`
+                                };
+                                vm.users.push(tmp);
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
                 },
                 function (e) {}
             )
         }
-        axios.post(URLs.ADDRESS_NEARBY, {
-            "lat": this.center[0],
-            "lon": this.center[1],
-            "radius": 10000
-        })
-            .then(response => {
-                this.pageInit = true;
-                const data = response.data;
-                for (let i = 0; i < data.length; i++) {
-                    let tmp = {
-                        index: i,
-                        like: false,
-                        title: data[i].title,
-                        text: data[i].text,
-                        images: data[i].media && data[i].media.images,
-                        name: data[i].publisher.userName,
-                        time: timeFormat(data[i].timeStamp),
-                        center: [data[i].location.lon, data[i].location.lat],
-                        avatar: `${API_DOMAIN}/account/avatar/${data[i].publisher.userName}`
-                    };
-                    this.users.push(tmp);
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            })
     }
 });
