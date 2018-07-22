@@ -53,6 +53,9 @@ const app = new Vue({
         handleHideModal() {
             this.modalAppear = false;
         },
+        handleDownload() {
+            window.open('https://dakoala.github.io/Focus/oia');
+        },
         preventBroadcast() {
             return;
         }

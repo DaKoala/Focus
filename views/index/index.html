@@ -28,7 +28,7 @@
         <div class="gps-button">
             <img class="gps-icon" src="../../src/images/gps.svg">
         </div>
-        <div class="download-button">下载聚点</div>
+        <div class="download-button" @click="handleDownload">下载聚点</div>
 
         <div class="modal" v-if="modalAppear" v-on:click="handleHideModal">
             <div class="modal-box" v-on:click.stop="preventBroadcast">
