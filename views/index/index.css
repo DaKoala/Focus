@@ -61,7 +61,7 @@ p {
 
 .download-button {
     position: fixed;
-    left: calc(50% - 70px);
+    left: calc(50% - 91px);
     bottom: 16px;
     padding: 0 35px;
     display: flex;
@@ -70,7 +70,7 @@ p {
     color: #ffffff;
     background: #CF766E;
     height: 56px;
-    font-size: 20px;
+    font-size: 16px;
     border-radius: 50px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
 }

@@ -79,6 +79,7 @@ const app = new Vue({
                         "radius": 10000
                     })
                         .then(response => {
+                            console.log(response);
                             this.pageInit = true;
                             const data = response.data;
                             for (let i = 0; i < data.length; i++) {
