@@ -66,8 +66,7 @@ const app = new Vue({
     },
     created: function() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
+            navigator.geolocation.getCurrentPosition(position => {
                     const longitude = position.coords.longitude;
                     const latitude = position.coords.latitude;
                     this.center.push(longitude);
