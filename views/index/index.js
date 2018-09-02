@@ -65,46 +65,72 @@ const app = new Vue({
         }
     },
     created: function() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                    console.log(position);
-                    let longitude = position.coords.longitude;
-                    let latitude = position.coords.latitude;
-                    this.center.push(longitude);
-                    this.center.push(latitude);
-                    this.locationInit = true;
-                    axios.post(URLs.ADDRESS_NEARBY, {
-                        "lat": this.center[1],
-                        "lon": this.center[0],
-                        "radius": 10000
-                    })
-                        .then(response => {
-                            console.log(response);
-                            this.pageInit = true;
-                            const data = response.data;
-                            for (let i = 0; i < data.length; i++) {
-                                let tmp = {
-                                    index: i,
-                                    like: false,
-                                    title: data[i].title,
-                                    text: data[i].text,
-                                    images: data[i].media && data[i].media.images,
-                                    name: data[i].publisher.userName,
-                                    time: timeFormat(data[i].timeStamp),
-                                    center: [data[i].location.lon, data[i].location.lat],
-                                    avatar: `${API_DOMAIN}/account/avatar/${data[i].publisher.userName}`
-                                };
-                                this.users.push(tmp);
-                            }
-                        })
-                        .catch(error => {
-                            console.log(error)
-                        })
-                },
-                function (e) {
-                    console.log(e);
-                }
-            )
+        /**
+         * Below is the code that depends on a running server
+         */
+        // if (navigator.geolocation) {
+        //     navigator.geolocation.getCurrentPosition(position => {
+        //             console.log(position);
+        //             let longitude = position.coords.longitude;
+        //             let latitude = position.coords.latitude;
+        //             this.center.push(longitude);
+        //             this.center.push(latitude);
+        //             this.locationInit = true;
+        //             axios.post(URLs.ADDRESS_NEARBY, {
+        //                 "lat": this.center[1],
+        //                 "lon": this.center[0],
+        //                 "radius": 10000
+        //             })
+        //                 .then(response => {
+        //                     console.log(response);
+        //                     this.pageInit = true;
+        //                     const data = response.data;
+        //                     for (let i = 0; i < data.length; i++) {
+        //                         let tmp = {
+        //                             index: i,
+        //                             like: false,
+        //                             title: data[i].title,
+        //                             text: data[i].text,
+        //                             images: data[i].media && data[i].media.images,
+        //                             name: data[i].publisher.userName,
+        //                             time: timeFormat(data[i].timeStamp),
+        //                             center: [data[i].location.lon, data[i].location.lat],
+        //                             avatar: `${API_DOMAIN}/account/avatar/${data[i].publisher.userName}`
+        //                         };
+        //                         this.users.push(tmp);
+        //                     }
+        //                 })
+        //                 .catch(error => {
+        //                     console.log(error)
+        //                 })
+        //         },
+        //         function (e) {
+        //             console.log(e);
+        //         }
+        //     )
+        // }
+
+        /**
+         * Below is the code for demo
+         */
+        this.center.push(mockData.center.longitude);
+        this.center.push(mockData.center.latitude);
+        this.locationInit = true;
+        this.pageInit = true;
+        const data = mockData.data;
+        for (let i = 0; i < data.length; i++) {
+            let tmp = {
+                index: i,
+                like: false,
+                title: data[i].title,
+                text: data[i].text,
+                images: undefined,
+                name: data[i].userName,
+                time: data[i].time,
+                center: data[i].center,
+                avatar: data[i].avatar
+            };
+            this.users.push(tmp);
         }
     }
 });
