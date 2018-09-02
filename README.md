@@ -4,7 +4,7 @@
 
 ![logo](https://s1.ax1x.com/2018/09/03/PzEAG4.png)
 
-A LBS social application. Users can post and view posts by other users based on location. The posts users post can only be viewed by people nearby and they can only view posts nearby.
+An LBS social application. Users can post and view posts by other users based on location. The posts users post can only be viewed by people nearby and they can only view posts nearby.
 
 一个基于地理位置的社交软件，用户可以发送和查看基于地理位置的推文，用户发的推文只能被附近的人看到，同时也只能看附近的人的推文。
 
