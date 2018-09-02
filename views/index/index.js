@@ -12,7 +12,7 @@ const app = new Vue({
     data: {
         zoom: 15,
         center: [],
-        maskUrl: 'https://s1.ax1x.com/2018/07/21/PGilHf.png',
+        maskUrl: images.mask,
         locationInit: false,
         pageInit: false,
         modalAppear: false,
@@ -124,7 +124,7 @@ const app = new Vue({
                 like: false,
                 title: data[i].title,
                 text: data[i].text,
-                images: undefined,
+                images: data[i].images,
                 name: data[i].userName,
                 time: data[i].time,
                 center: data[i].center,
